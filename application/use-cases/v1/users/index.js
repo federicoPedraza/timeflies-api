@@ -1,7 +1,7 @@
-const signInUseCase = require('./sign-in.use-case');
+const signUpUseCase = require('./sign-up.use-case');
 const logInUseCase = require('./log-in.use-case');
 
 module.exports = {
-    signInUseCase: new signInUseCase(),
+    signUpUseCase: new signUpUseCase(),
     logInUseCase: new logInUseCase()
 }

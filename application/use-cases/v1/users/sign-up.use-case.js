@@ -1,7 +1,7 @@
 const { userRepository } = require('../../../../infrastructure/repositories/postgresql');
 const bcrypt = require('bcrypt');
 
-class SignInUseCase {
+class SignUpUseCase {
     async execute({ name, email, password: unhashedPassword }) {
         const conflict = await userRepository.findByEmail(email);
 
@@ -20,4 +20,4 @@ class SignInUseCase {
     }
 }
 
-module.exports = SignInUseCase;
+module.exports = SignUpUseCase;

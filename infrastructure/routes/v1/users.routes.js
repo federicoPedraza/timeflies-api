@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const useCases = require('../../../application/use-cases/v1');
 
-router.post('/sign-in', async (req, res) => {
+router.post('/sign-up', async (req, res) => {
     const { name, email, password } = req.body;
 
-    const result = await useCases.signInUseCase.execute({ name, email, password });
+    const result = await useCases.signUpUseCase.execute({ name, email, password });
 
     res.status(200).json(result);
 });
