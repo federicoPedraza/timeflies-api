@@ -1,4 +1,6 @@
 const express = require('express');
+require('dotenv').config();
+
 const app = express();
 
 const router = require('./infrastructure/routes/routing');
