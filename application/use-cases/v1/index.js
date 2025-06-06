@@ -1,3 +1,4 @@
 module.exports = {
-    ...require('./health')
+    ...require('./health'),
+    ...require('./users')
 }

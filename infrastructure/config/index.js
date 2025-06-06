@@ -1,3 +1,3 @@
 module.exports = {
-    postgres: require('./postgres.config')
+    knex: require('./knex.config')
 }
