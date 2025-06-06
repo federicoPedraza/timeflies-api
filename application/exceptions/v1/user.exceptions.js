@@ -1,8 +1,14 @@
 const { HTTPError } = require("../../presentations");
 
-class UserAlreadyExistsException extends HTTPError {
+class UserEmailAlreadyExistsException extends HTTPError {
     constructor() {
-        super('User already exists', 409);
+        super('User with that email already exists', 409);
+    }
+}
+
+class UserNameAlreadyExistsException extends HTTPError {
+    constructor() {
+        super('User with that name already exists', 409);
     }
 }
 
@@ -19,7 +25,8 @@ class InvalidCredentialsException extends HTTPError {
 }
 
 module.exports = {
-    UserAlreadyExistsException,
+    UserEmailAlreadyExistsException,
+    UserNameAlreadyExistsException,
     UserNotFoundException,
     InvalidCredentialsException
 }
