@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const healthUseCases = require('../../../application/use-cases/v1/health');
+const useCases = require('../../../application/use-cases/v1');
 
 router.get('/', async (req, res) => {
-    const result = await healthUseCases.healthCheckUseCase.execute();
+    const result = await useCases.healthCheckUseCase.execute();
     res.status(200).json(result);
 });
 
