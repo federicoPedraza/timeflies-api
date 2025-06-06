@@ -1,13 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const useCases = require('../../../application/use-cases/v1');
+const { Response } = require('../../../application/presentations');
 
 router.post('/sign-up', async (req, res) => {
     const { name, email, password } = req.body;
 
     const result = await useCases.signUpUseCase.execute({ name, email, password });
 
-    res.status(200).json(result);
+    Response.send({
+        res,
+        data: result,
+        message: 'User created successfully'
+    });
 });
 
 router.post('/login', async (req, res) => {
@@ -15,7 +20,11 @@ router.post('/login', async (req, res) => {
 
     const result = await useCases.logInUseCase.execute({ identifier, password });
 
-    res.status(200).json(result);
+    Response.send({
+        res,
+        data: result,
+        message: 'User logged in successfully'
+    });
 });
 
 module.exports = {

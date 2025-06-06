@@ -1,4 +1,5 @@
 const { userRepository } = require('../../../../infrastructure/repositories/postgresql');
+const { InvalidCredentialsException } = require('../../../exceptions/v1');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -15,13 +16,13 @@ class LogInUseCase {
         }
 
         if (!user) {
-            throw new Error('User not found');
+            throw new InvalidCredentialsException();
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
-            throw new Error('Invalid password');
+            throw new InvalidCredentialsException();
         }
 
         const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);

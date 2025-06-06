@@ -1,12 +1,13 @@
 const { userRepository } = require('../../../../infrastructure/repositories/postgresql');
 const bcrypt = require('bcrypt');
+const { UserAlreadyExistsException } = require('../../../exceptions/v1');
 
 class SignUpUseCase {
     async execute({ name, email, password: unhashedPassword }) {
         const conflict = await userRepository.findByEmail(email);
 
         if (Boolean(conflict)) {
-            throw new Error('User already exists');
+            throw new UserAlreadyExistsException();
         }
 
         const password = await bcrypt.hash(unhashedPassword, 10);
