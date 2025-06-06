@@ -10,6 +10,14 @@ router.post('/sign-in', async (req, res) => {
     res.status(200).json(result);
 });
 
+router.post('/login', async (req, res) => {
+    const { identifier, password } = req.body;
+
+    const result = await useCases.logInUseCase.execute({ identifier, password });
+
+    res.status(200).json(result);
+});
+
 module.exports = {
     path: '/users',
     router

@@ -42,6 +42,18 @@ class UserRepository {
 			updatedAt: row.updated_at
 		}) : null;
 	}
+
+	async findByName(name) {
+		const row = await knex('users').where('name', name).first();
+		return row ? new User({
+			id: row.id,
+			name: row.name,
+			email: row.email,
+			password: row.password,
+			createdAt: row.created_at,
+			updatedAt: row.updated_at
+		}) : null;
+	}
 }
 
 module.exports = UserRepository;
