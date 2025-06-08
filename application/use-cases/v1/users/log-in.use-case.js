@@ -25,7 +25,7 @@ class LogInUseCase {
             throw new InvalidCredentialsException();
         }
 
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+        const token = jwt.sign({ id: user.id, name: user.name, email: user.email }, process.env.JWT_SECRET);
 
         return {
             token
