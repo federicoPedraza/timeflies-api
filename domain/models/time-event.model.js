@@ -1,13 +1,13 @@
 class TimeEvent {
     constructor({ id, authorId, title, description, start, end, createdAt, updatedAt }) {
         this.id = id
-        this.authorId = authorId
+        this.author_id = authorId
         this.title = title
         this.description = description
         this.start = start
         this.end = end
-        this.createdAt = createdAt
-        this.updatedAt = updatedAt
+        this.created_at = createdAt
+        this.updated_at = updatedAt
     }
 }
 

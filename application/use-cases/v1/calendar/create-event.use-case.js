@@ -7,7 +7,7 @@ class CreateEventUseCase {
         }
 
         const newEvent = await timeEventRepository.create({
-            authorId: user.userId,
+            authorId: user.id,
             title: event.title,
             description: event.description || '',
             start: event.start,

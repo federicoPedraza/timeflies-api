@@ -21,7 +21,8 @@ router.post('/create', async (req, res) => {
     });
 });
 
-router.patch('/modify/:targetEventId', async (req, res) => {
+router.put('/modify/:targetEventId', async (req, res) => {
+    console.log(req.body);
     await useCases.modifyEventUseCase.execute(req.user, req.body, req.params.targetEventId);
     Response.send({
         res,

@@ -21,6 +21,11 @@ class TimeEventRepository {
 		return new TimeEvent({ id, authorId, title, description, start, end, createdAt: now, updatedAt: now });
 	}
 
+	async findById(id) {
+		const event = await knex('time_events').where('id', id).first();
+		return event;
+	}
+
     async findAll(authorId, start, end) {
 		const events = await knex('time_events').where('author_id', authorId).whereBetween('start', [start, end]).orderBy('start', 'asc');
         return events.map(event => new TimeEvent({
