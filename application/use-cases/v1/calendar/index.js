@@ -1,0 +1,7 @@
+const getEvents = require('./get-events.use-case');
+const createEvent = require('./create-event.use-case');
+
+module.exports = {
+    getEventsUseCase: new getEvents(),
+    createEventUseCase: new createEvent()
+}

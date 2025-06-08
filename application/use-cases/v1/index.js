@@ -1,4 +1,5 @@
 module.exports = {
     ...require('./health'),
-    ...require('./users')
+    ...require('./users'),
+    ...require('./calendar')
 }

@@ -10,13 +10,15 @@ app.use(cors({
 }));
 
 const router = require('./infrastructure/routes/routing');
-const { httpErrorHandler } = require('./infrastructure/config/middleware');
+const { httpErrorHandler, authHandler } = require('./infrastructure/config/middleware');
 
 app.use(express.json());
+app.use(authHandler);
 
 app.use('/', router);
 
 // error filter
 app.use(httpErrorHandler);
+
 
 module.exports = app;
