@@ -12,8 +12,7 @@ class GetEventsUseCase {
             end = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
         }
 
-
-        const events = await timeEventRepository.findAll(user.userId, start, end);
+        const events = await timeEventRepository.findAll(user.id, start, end);
 
         if (!events) {
             return [];

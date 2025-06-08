@@ -22,7 +22,7 @@ class TimeEventRepository {
 	}
 
     async findAll(authorId, start, end) {
-        const events = await knex('time_events').where('author_id', authorId).whereBetween('start', [start, end]).orderBy('start', 'asc');
+		const events = await knex('time_events').where('author_id', authorId).whereBetween('start', [start, end]).orderBy('start', 'asc');
         return events.map(event => new TimeEvent({
             id: event.id,
             authorId: event.author_id,
@@ -33,6 +33,10 @@ class TimeEventRepository {
             createdAt: event.created_at,
             updatedAt: event.updated_at
         }));
+    }
+
+    async update(targetEventId, event) {
+        await knex('time_events').where('id', targetEventId).update(event);
     }
 }
 

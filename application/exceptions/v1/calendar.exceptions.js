@@ -6,6 +6,13 @@ class InvalidCreateEventParametersException extends HTTPError {
     }
 }
 
+class InvalidModifyEventParametersException extends HTTPError {
+    constructor() {
+        super('Invalid modify event parameters', 400);
+    }
+}
+
 module.exports = {
-    InvalidCreateEventParametersException
+    InvalidCreateEventParametersException,
+    InvalidModifyEventParametersException
 }

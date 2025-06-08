@@ -21,6 +21,14 @@ router.post('/create', async (req, res) => {
     });
 });
 
+router.patch('/modify/:targetEventId', async (req, res) => {
+    await useCases.modifyEventUseCase.execute(req.user, req.body, req.params.targetEventId);
+    Response.send({
+        res,
+        message: 'Event modified successfully'
+    });
+});
+
 module.exports = {
     path: '/calendar',
     router
