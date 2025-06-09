@@ -27,6 +27,21 @@ router.post('/login', async (req, res) => {
     });
 });
 
+router.get('/check-email', async (req, res) => {
+    const { email } = req.query;
+
+    const used = await useCases.getEmailUsageUseCase.execute({ email });
+
+    const message = used ? 'Email already in use' : 'Email is available';
+    Response.send({
+        res,
+        data: {
+            available: !used
+        },
+        message
+    });
+});
+
 module.exports = {
     path: '/users',
     router
