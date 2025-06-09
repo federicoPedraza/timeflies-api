@@ -12,8 +12,6 @@ class ModifyEventUseCase {
         if (user.id !== event.author_id) {
             throw new ForbiddenException();
         }
-        console.log(payload);
-
 
         if (!payload.title || !payload.start || !payload.end) {
             throw new InvalidModifyEventParametersException();

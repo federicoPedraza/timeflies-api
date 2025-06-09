@@ -1,6 +1,8 @@
 const { userRepository } = require('../../../../infrastructure/repositories/postgresql');
-const bcrypt = require('bcrypt');
+const { LoggedUser } = require('../../../../domain/models');
 const { UserEmailAlreadyExistsException, UserNameAlreadyExistsException } = require('../../../exceptions/v1');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 class SignUpUseCase {
     async execute({ name, email, password: unhashedPassword }) {
@@ -20,9 +22,17 @@ class SignUpUseCase {
 
         const user = await userRepository.create({ name, email, password });
 
+        const loggedUser = new LoggedUser({
+            id: user.id,
+            name: user.name,
+            email: user.email
+        });
+
+        const token = jwt.sign(loggedUser.toJwtPayload(), process.env.JWT_SECRET, { expiresIn: '1h' });
+
         return {
             id: user.id,
-            message: 'User created successfully'
+            token
         };
     }
 }

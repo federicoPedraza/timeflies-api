@@ -1,7 +1,8 @@
 const { userRepository } = require('../../../../infrastructure/repositories/postgresql');
 const { InvalidCredentialsException } = require('../../../exceptions/v1');
-const jwt = require('jsonwebtoken');
+const { LoggedUser } = require('../../../../domain/models');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 class LogInUseCase {
     async execute({ identifier, password }) {
@@ -25,9 +26,16 @@ class LogInUseCase {
             throw new InvalidCredentialsException();
         }
 
-        const token = jwt.sign({ id: user.id, name: user.name, email: user.email }, process.env.JWT_SECRET);
+        const loggedUser = new LoggedUser({
+            id: user.id,
+            name: user.name,
+            email: user.email
+        });
+
+        const token = jwt.sign(loggedUser.toJwtPayload(), process.env.JWT_SECRET, { expiresIn: '1h' });
 
         return {
+            id: user.id,
             token
         };
     }
