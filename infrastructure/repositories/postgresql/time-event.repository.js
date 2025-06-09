@@ -47,6 +47,10 @@ class TimeEventRepository {
     async deleteByAuthorId(authorId) {
         await knex('time_events').where('author_id', authorId).delete();
     }
+
+	async delete(targetEventId) {
+		await knex('time_events').where('id', targetEventId).delete();
+	}
 }
 
 module.exports = TimeEventRepository;

@@ -29,6 +29,14 @@ router.put('/modify/:targetEventId', async (req, res) => {
     });
 });
 
+router.delete('/delete/:targetEventId', async (req, res) => {
+    await useCases.deleteEventUseCase.execute(req.user, req.params.targetEventId);
+    Response.send({
+        res,
+        message: 'Event deleted successfully'
+    });
+});
+
 module.exports = {
     path: '/calendar',
     router
