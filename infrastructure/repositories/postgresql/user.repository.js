@@ -54,6 +54,10 @@ class UserRepository {
 			updatedAt: row.updated_at
 		}) : null;
 	}
+
+	async delete(id) {
+		await knex('users').where('id', id).delete();
+	}
 }
 
 module.exports = UserRepository;

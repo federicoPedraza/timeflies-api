@@ -24,9 +24,16 @@ class InvalidCredentialsException extends HTTPError {
     }
 }
 
+class UserNotAuthorizedException extends HTTPError {
+    constructor() {
+        super('User not authorized', 401);
+    }
+}
+
 module.exports = {
     UserEmailAlreadyExistsException,
     UserNameAlreadyExistsException,
     UserNotFoundException,
-    InvalidCredentialsException
+    InvalidCredentialsException,
+    UserNotAuthorizedException
 }

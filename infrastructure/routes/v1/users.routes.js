@@ -42,6 +42,16 @@ router.get('/check-email', async (req, res) => {
     });
 });
 
+router.delete('/me', async (req, res) => {
+    const result = await useCases.deleteUserUseCase.execute(req.user);
+
+    Response.send({
+        res,
+        data: result,
+        message: 'User deleted successfully'
+    });
+});
+
 module.exports = {
     path: '/users',
     router
