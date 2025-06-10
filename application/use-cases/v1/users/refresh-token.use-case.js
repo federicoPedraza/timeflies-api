@@ -1,29 +1,26 @@
 const { userRepository, refreshTokenRepository } = require('../../../../infrastructure/repositories/postgresql');
-const { InvalidCredentialsException } = require('../../../exceptions/v1');
 const { LoggedUser } = require('../../../../domain/models');
-const bcrypt = require('bcrypt');
+const { InvalidCredentialsException } = require('../../../exceptions/v1');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
-class LogInUseCase {
-    async execute({ identifier, password }) {
-        const isEmail = identifier.includes('@');
+class RefreshTokenUseCase {
+    async execute({ refreshToken }) {
+        const storedToken = await refreshTokenRepository.findByToken(refreshToken);
 
-        let user = null;
-
-        if (isEmail) {
-            user = await userRepository.findByEmail(identifier);
-        } else {
-            user = await userRepository.findByName(identifier);
-        }
-
-        if (!user) {
+        if (!storedToken) {
             throw new InvalidCredentialsException();
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (new Date() > new Date(storedToken.expiresAt)) {
+            await refreshTokenRepository.deleteByToken(refreshToken);
+            throw new InvalidCredentialsException();
+        }
 
-        if (!isPasswordValid) {
+        const user = await userRepository.findById(storedToken.userId);
+
+        if (!user) {
+            await refreshTokenRepository.deleteByToken(refreshToken);
             throw new InvalidCredentialsException();
         }
 
@@ -35,24 +32,23 @@ class LogInUseCase {
 
         const accessToken = jwt.sign(loggedUser.toJwtPayload(), process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        const refreshToken = crypto.randomBytes(40).toString('hex');
+        const newRefreshToken = crypto.randomBytes(40).toString('hex');
         const expiresAt = new Date();
         expiresAt.setDate(expiresAt.getDate() + 7); // 7 days from now
 
-        await refreshTokenRepository.deleteByUserId(user.id);
+        await refreshTokenRepository.deleteByToken(refreshToken);
 
         await refreshTokenRepository.create({
             userId: user.id,
-            token: refreshToken,
+            token: newRefreshToken,
             expiresAt
         });
 
         return {
-            id: user.id,
             accessToken,
-            refreshToken
+            refreshToken: newRefreshToken
         };
     }
 }
 
-module.exports = LogInUseCase;
+module.exports = RefreshTokenUseCase;

@@ -27,6 +27,18 @@ router.post('/login', async (req, res) => {
     });
 });
 
+router.post('/refresh-token', async (req, res) => {
+    const { refreshToken } = req.body;
+
+    const result = await useCases.refreshTokenUseCase.execute({ refreshToken });
+
+    Response.send({
+        res,
+        data: result,
+        message: 'Token refreshed successfully'
+    });
+});
+
 router.get('/check-email', async (req, res) => {
     const { email } = req.query;
 
