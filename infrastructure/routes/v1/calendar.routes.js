@@ -4,7 +4,9 @@ const useCases = require('../../../application/use-cases/v1');
 const { Response } = require('../../../application/presentations');
 
 router.get('/events', async (req, res) => {
-    const result = await useCases.getEventsUseCase.execute(req.user, req.query.start, req.query.end);
+    const { start, end } = req.query;
+
+    const result = await useCases.getEventsUseCase.execute(req.user, start, end);
     Response.send({
         res,
         data: result,

@@ -18,8 +18,22 @@ class InvalidModifyEventParametersException extends HTTPError {
     }
 }
 
+class GetEventsRangeTooLongException extends HTTPError {
+    constructor() {
+        super('Get events range too long', 400);
+    }
+}
+
+class GetEventsRangeInvalidException extends HTTPError {
+    constructor() {
+        super('Get events range invalid', 400);
+    }
+}
+
 module.exports = {
     EventNotFoundException,
     InvalidCreateEventParametersException,
-    InvalidModifyEventParametersException
+    InvalidModifyEventParametersException,
+    GetEventsRangeTooLongException,
+    GetEventsRangeInvalidException
 }
