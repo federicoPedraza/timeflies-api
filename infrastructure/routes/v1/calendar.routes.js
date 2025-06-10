@@ -39,6 +39,15 @@ router.delete('/delete/:targetEventId', async (req, res) => {
     });
 });
 
+router.get('/weather', async (req, res) => {
+    const result = await useCases.getWeatherUseCase.execute(req.query.city, req.query.days);
+    Response.send({
+        res,
+        data: result,
+        message: 'Weather retrieved successfully'
+    });
+});
+
 module.exports = {
     path: '/calendar',
     router

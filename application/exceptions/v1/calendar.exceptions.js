@@ -30,10 +30,24 @@ class GetEventsRangeInvalidException extends HTTPError {
     }
 }
 
+class GetWeatherInvalidParametersException extends HTTPError {
+    constructor() {
+        super('Get weather invalid parameters', 400);
+    }
+}
+
+class WeatherProviderException extends HTTPError {
+    constructor() {
+        super('Weather provider is not available', 500);
+    }
+}
+
 module.exports = {
     EventNotFoundException,
     InvalidCreateEventParametersException,
     InvalidModifyEventParametersException,
     GetEventsRangeTooLongException,
-    GetEventsRangeInvalidException
+    GetEventsRangeInvalidException,
+    GetWeatherInvalidParametersException,
+    WeatherProviderException
 }
