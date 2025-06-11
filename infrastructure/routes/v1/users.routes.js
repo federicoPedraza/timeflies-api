@@ -55,7 +55,8 @@ router.get('/check-email', async (req, res) => {
 });
 
 router.delete('/me', async (req, res) => {
-    const result = await useCases.deleteUserUseCase.execute(req.user);
+    const { password } = req.body;
+    const result = await useCases.deleteUserUseCase.execute(req.user, password);
 
     Response.send({
         res,
