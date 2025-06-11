@@ -6,15 +6,15 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
 class LogInUseCase {
-    async execute({ identifier, password }) {
-        const isEmail = identifier.includes('@');
+    async execute({ email, password }) {
+        const isEmail = email.includes('@');
 
         let user = null;
 
         if (isEmail) {
-            user = await userRepository.findByEmail(identifier);
+            user = await userRepository.findByEmail(email);
         } else {
-            user = await userRepository.findByName(identifier);
+            user = await userRepository.findByName(email);
         }
 
         if (!user) {

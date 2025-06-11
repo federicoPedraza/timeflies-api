@@ -16,9 +16,9 @@ router.post('/sign-up', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    const { identifier, password } = req.body;
+    const { email, password } = req.body;
 
-    const result = await useCases.logInUseCase.execute({ identifier, password });
+    const result = await useCases.logInUseCase.execute({ email, password });
 
     Response.send({
         res,
