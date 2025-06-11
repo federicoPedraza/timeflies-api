@@ -1,7 +1,6 @@
-const { userRepository } = require('../../../../infrastructure/repositories/postgresql');
-const { refreshTokenRepository } = require('../../../../infrastructure/repositories/postgresql/refresh-token.repository');
+const { userRepository, refreshTokenRepository } = require('../../../../infrastructure/repositories/postgresql');
 const { LoggedUser } = require('../../../../domain/models');
-const { UserEmailAlreadyExistsException, UserNameAlreadyExistsException } = require('../../../exceptions/v1');
+const { UserEmailAlreadyExistsException } = require('../../../exceptions/v1');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
@@ -12,12 +11,6 @@ class SignUpUseCase {
 
         if (Boolean(conflict)) {
             throw new UserEmailAlreadyExistsException();
-        }
-
-        const nameConflict = await userRepository.findByName(name);
-
-        if (Boolean(nameConflict)) {
-            throw new UserNameAlreadyExistsException();
         }
 
         const password = await bcrypt.hash(unhashedPassword, 10);
