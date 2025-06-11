@@ -65,6 +65,16 @@ router.delete('/me', async (req, res) => {
     });
 });
 
+router.put('/change-password', async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    await useCases.changePasswordUseCase.execute(req.user, oldPassword, newPassword);
+
+    Response.send({
+        res,
+        message: 'Password changed successfully'
+    });
+});
+
 module.exports = {
     path: '/users',
     router

@@ -44,6 +44,12 @@ class RefreshTokenRepository {
             .where('token', token)
             .delete();
     }
+
+    async deleteAllByUserId(userId) {
+        await knex('refresh_tokens')
+            .where('user_id', userId)
+            .delete();
+    }
 }
 
 module.exports = RefreshTokenRepository;

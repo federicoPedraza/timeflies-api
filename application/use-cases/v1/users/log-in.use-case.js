@@ -39,8 +39,6 @@ class LogInUseCase {
         const expiresAt = new Date();
         expiresAt.setDate(expiresAt.getDate() + 7); // 7 days from now
 
-        await refreshTokenRepository.deleteByUserId(user.id);
-
         await refreshTokenRepository.create({
             userId: user.id,
             token: refreshToken,

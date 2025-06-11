@@ -58,6 +58,10 @@ class UserRepository {
 	async delete(id) {
 		await knex('users').where('id', id).delete();
 	}
+
+	async updatePassword(id, password) {
+		await knex('users').where('id', id).update({ password });
+	}
 }
 
 module.exports = UserRepository;
