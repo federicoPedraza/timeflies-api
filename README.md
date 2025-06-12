@@ -219,20 +219,3 @@ docker-compose logs -f
 # Stop the environment
 docker-compose down
 ```
-
-### Common Issues
-
-1. **Database Connection Issues**
-   - Ensure PostgreSQL is running
-   - Check environment variables
-   - Verify Docker container status
-
-2. **JWT Authentication Issues**
-   - Verify JWT_SECRET is set
-   - Check token expiration
-   - Ensure proper token format
-
-3. **Weather API Issues**
-   - Verify API key is valid
-   - Check API rate limits
-   - Ensure city name is correct
