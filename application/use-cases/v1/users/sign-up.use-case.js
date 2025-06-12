@@ -1,4 +1,4 @@
-const { userRepository, refreshTokenRepository } = require('../../../../infrastructure/repositories/postgresql');
+const { userRepository, refreshTokenRepository, userSettingRepository } = require('../../../../infrastructure/repositories/postgresql');
 const { LoggedUser } = require('../../../../domain/models');
 const { UserEmailAlreadyExistsException } = require('../../../exceptions/v1');
 const bcrypt = require('bcrypt');
@@ -36,6 +36,15 @@ class SignUpUseCase {
             userId: user.id,
             token: refreshToken,
             expiresAt
+        });
+
+        // Create settings
+        await userSettingRepository.create({
+            userId: user.id,
+            timezone: 'America/Buenos_Aires',
+            weekStartsOnSunday: false,
+            focusHourOnStart: true,
+            timeNotation: '12h'
         });
 
         return {

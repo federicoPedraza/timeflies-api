@@ -75,6 +75,27 @@ router.put('/change-password', async (req, res) => {
     });
 });
 
+router.get('/me', async (req, res) => {
+    const result = await useCases.getUserSettingsUseCase.execute(req.user);
+
+    Response.send({
+        res,
+        data: result,
+        message: 'User settings fetched successfully'
+    });
+});
+
+router.patch('/me', async (req, res) => {
+    const settings = req.body;
+
+    await useCases.updateSettingsUseCase.execute(req.user, settings);
+
+    Response.send({
+        res,
+        message: 'User settings updated successfully'
+    });
+});
+
 module.exports = {
     path: '/users',
     router
