@@ -5,7 +5,7 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors({
-    origin: '*',
+    origin: 'https://timeflies-app.vercel.app',
     credentials: true
 }));
 
